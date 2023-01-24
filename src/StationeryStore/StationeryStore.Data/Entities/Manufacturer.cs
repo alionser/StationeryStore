@@ -1,4 +1,4 @@
-﻿namespace Data.Entities;
+﻿namespace StationeryStore.Data.Entities;
 
 public sealed class Manufacturer
 {

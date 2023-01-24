@@ -1,7 +1,7 @@
-﻿using Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using StationeryStore.Data.Entities;
 
-namespace Data;
+namespace StationeryStore.Data;
 
 public class DataContext : DbContext
 {

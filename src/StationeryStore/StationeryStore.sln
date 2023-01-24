@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{E63F87E2-20B3-463D-8ACB-3EA8D176FC5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StationeryStore.Data", "StationeryStore.Data\StationeryStore.Data.csproj", "{E63F87E2-20B3-463D-8ACB-3EA8D176FC5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
