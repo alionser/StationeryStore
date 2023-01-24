@@ -15,28 +15,59 @@ public class DataContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Category>(entity =>
+        ConfigureCategory(modelBuilder);
+        ConfigureReview(modelBuilder);
+        ConfigureTag(modelBuilder);
+        ConfigureManufacture(modelBuilder);
+        ConfigureProduct(modelBuilder);
+
+    }
+
+    private static void ConfigureProduct(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Product>(entity =>
         {
-            entity.Property(c => c.Title)
+            entity.Property(p => p.Title)
+                .HasMaxLength(100)
                 .IsRequired();
 
-            entity.Property(c => c.Description)
-                .HasMaxLength(100);
-        });
-
-        modelBuilder.Entity<Review>(entity =>
-        {
-            entity.Property(r => r.Rating)
-                .IsRequired();
-            
-            entity.Property(r => r.Comment)
+            entity.Property(p => p.Description)
                 .HasMaxLength(500);
 
-            entity.HasOne(r => r.Product)
-                .WithMany(p => p.Reviews)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
+            entity.Property(p => p.Price)
+                .HasPrecision(2);
 
+            entity.HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(p => p.Manufacturer)
+                .WithMany(m => m.Products)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasMany(p => p.Tags)
+                .WithMany(t => t.Products);
+        });
+    }
+
+    private static void ConfigureManufacture(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Manufacturer>(entity =>
+        {
+            entity.Property(p => p.Title)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            entity.Property(p => p.Description)
+                .HasMaxLength(500);
+
+            entity.Property(p => p.Rating)
+                .HasPrecision(2);
+        });
+    }
+
+    private static void ConfigureTag(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<Tag>(entity =>
         {
             entity.Property(t => t.Title)
@@ -47,43 +78,33 @@ public class DataContext : DbContext
                 .HasMaxLength(100)
                 .IsRequired();
         });
+    }
 
-        modelBuilder.Entity<Manufacturer>(entity =>
+    private static void ConfigureReview(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Review>(entity =>
         {
-            entity.Property(p => p.Title)
-                .HasMaxLength(100)
+            entity.Property(r => r.Rating)
                 .IsRequired();
-            
-            entity.Property(p => p.Description)
+
+            entity.Property(r => r.Comment)
                 .HasMaxLength(500);
 
-            entity.Property(p => p.Rating)
-                .HasPrecision(2);
+            entity.HasOne(r => r.Product)
+                .WithMany(p => p.Reviews)
+                .OnDelete(DeleteBehavior.Cascade);
         });
+    }
 
-        modelBuilder.Entity<Product>(entity =>
+    private static void ConfigureCategory(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Category>(entity =>
         {
-            entity.Property(p => p.Title)
-                .HasMaxLength(100)
+            entity.Property(c => c.Title)
                 .IsRequired();
-            
-            entity.Property(p => p.Description)
-                .HasMaxLength(500);
-            
-            entity.Property(p => p.Price)
-                .HasPrecision(2);
 
-            entity.HasOne(p => p.Category)
-                .WithMany(c => c.Products)
-                .OnDelete(DeleteBehavior.Restrict);
-            
-            entity.HasOne(p => p.Manufacturer)
-                .WithMany(m => m.Products)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            entity.HasMany(p => p.Tags)
-                .WithMany(t => t.Products);
+            entity.Property(c => c.Description)
+                .HasMaxLength(100);
         });
-
     }
 }
