@@ -19,19 +19,8 @@ public sealed class StartUp
 
         var connectionString = Configuration.GetConnectionString("DefaultConnection");
         
-        
-        services.AddDbContext<DataContext>(
-            options =>
-            {
-                options.UseNpgsql(connectionString, b =>
-                {
-                    b.MigrationsAssembly("StationeryStore.Data");
-                });
-            },
-            ServiceLifetime.Transient);
-
-        // services.AddDbContext<DataContext>(options => { options.UseNpgsql(connectionString); },
-        // ServiceLifetime.Transient);
+        services.AddDbContext<DataContext>(options => { options.UseNpgsql(connectionString); },
+        ServiceLifetime.Transient);
     }
 
     public void ConfigureContainer(ContainerBuilder builder)
